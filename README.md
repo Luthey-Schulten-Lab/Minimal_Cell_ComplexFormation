@@ -73,72 +73,42 @@ Typical CSV file size ranges from **100–200 MB** for a 6000 s simulation with 
 
 ## Input Files
 
-### `syn3A.gb`
-
-- GenBank file of JCVI-Syn3A ([NCBI Accession: CP016816](https://www.ncbi.nlm.nih.gov/nuccore/CP016816)).
-- Encodes genome sequence, segmentation, and gene annotations.
+- `syn3A.gb` — GenBank file of JCVI-Syn3A ([NCBI Accession: CP016816](https://www.ncbi.nlm.nih.gov/nuccore/CP016816)).
+  - Encodes genome sequence, segmentation, and gene annotations.
 <!-- - **Usage**: Read once at the beginning. Parsed by `mapDNA` in `initiation.py` to build the `genome` dictionary for use in CME reactions (`rxns_CME.py`). -->
 
----
+- `Syn3A_updated.xml` — Includes metabolites, compartments, reactions, and gene associations.
+  - Updated SBML model from [*eLife*, 2019](https://elifesciences.org/articles/36842).
 
-### `Syn3A_updated.xml`
-
-- Updated SBML model from [*eLife*, 2019](https://elifesciences.org/articles/36842).
-- Includes metabolites, compartments, reactions, and gene associations.
 <!-- - **Usage**: Read during ODE construction (`rxns_ODE.py`) every `hookInterval`. -->
 
----
 
-### `initial_concentration.xlsx`
-
-- Provides initial conditions for proteins, medium, and metabolites.
-
-**Sheet Breakdown:**
-- **Comparative Proteomics**: Protein initial counts for CME.
-- **Simulation Medium**: Medium composition for simulation.
-- **Intracellular Metabolites**: Metabolite concentrations in cytoplasm.
-- **protein_metabolites**: Protein metabolite IDs used in `initiation.py` and `rxns_ODE.py`.
+- `initial_concentration.xlsx` — Provides initial conditions for proteins, medium, and metabolites.
+  - **Sheet breakdown**:
+  - **Comparative Proteomics**: Protein initial counts for CME.
+  - **Simulation Medium**: Medium composition for simulation.
+  - **Intracellular Metabolites**: Metabolite concentrations in cytoplasm.
+  - **protein_metabolites**: Protein metabolite IDs used in `initiation.py` and `rxns_ODE.py`.
 
 <!-- > The "Experimental Medium" sheet is included but unused. -->
 
----
-
-### `kinetic_params.xlsx`
-
-- Contains kinetic parameters for ODE reactions and tRNA charging.
-
-**Sheet Breakdown:**
-- **Central, Nucleotide, Lipid, Cofactor, Transport**: Random binding + convenience rate law reactions (`rxns_ODE.py`).
-- **Non-Random-binding Reactions**: Passive transport and serial phosphorelay reactions (`rxns_ODE.py`).
-- **tRNA Charging**: Aminoacylation parameters (`rxns_CME.py`).
-
+- `kinetic_params.xlsx` — Contains kinetic parameters for ODE reactions and tRNA charging.
+  - **Sheet Breakdown:**
+  - **Central, Nucleotide, Lipid, Cofactor, Transport**: Random binding + convenience rate law reactions (`rxns_ODE.py`).
+  - **Non-Random-binding Reactions**: Passive transport and serial phosphorelay reactions (`rxns_ODE.py`).
+  - **tRNA Charging**: Aminoacylation parameters (`rxns_CME.py`).
 <!-- > Other sheets (e.g., from `kinetic_params_10thSeptember.xlsx`) are **not used**. -->
 
----
-
-### `complex_formation.xlsx`
-
-- Defines the composition of protein complexes.
+- `complex_formation.xlsx` — Defines the composition of protein complexes.
 
 <!-- **Sheet Breakdown:** -->
 <!-- - **Complexes**: Complex components, pathways, initial counts, and PDB info. -->
 
----
 
-### `avg_mRNACount.xlsx`
-
-- Contains averaged **steady-state mRNA counts** for each gene.
+- `avg_mRNACount.xlsx` — Contains averaged **steady-state mRNA counts** for each gene.
 <!-- - Previous name: `avg_mRNACount_30thAugust_1200_1800.xlsx`. -->
 
----
+- `oneParamMulder-local_min.json` — JSON-formatted **ribosome SSU assembly kinetics**
+  - From [Earnest et al., 2015](https://www.sciencedirect.com/science/article/pii/S0006349515007651).
 
-### `oneParamMulder-local_min.json`
-
-- JSON-formatted **ribosome SSU assembly kinetics**, from  
-  [Earnest et al., 2015](https://www.sciencedirect.com/science/article/pii/S0006349515007651).
-
----
-
-### `ribo_assembly.xlsx`
-
-- LSU and SSU ribosomal subunit assembly pathways with rates.
+- `ribo_assembly.xlsx` — LSU and SSU ribosomal subunit assembly pathways with rates.

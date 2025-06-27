@@ -26,7 +26,7 @@ To execute the parallel CMEODE simulation:
 bash mpirun.sh
 ```
 
-For a detailed explanation of parallel execution and simulation parameters, refer to `mpi_run.sh`.
+For a detailed explanation of parallel execution and simulation parameters, refer to `./programs/mpi_run.sh`.
 
 ---
 

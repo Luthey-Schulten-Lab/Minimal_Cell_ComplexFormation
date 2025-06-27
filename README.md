@@ -1,6 +1,6 @@
-# Well-stirred WCM of Minimal Cell with Complex Formation
+# Spatially homogeneous WCM of Minimal Cell with Macromolecular Complex Formation
 
-Welcome to the GitHub repository for the **Well-stirred whole-cell model (WCM)** of the genetically minimal cell **Syn3A**, incorporating complex formation processes!
+Welcome to the GitHub repository for the **Spatially homogeneous whole-cell model (WCM)** of the genetically minimal cell **Syn3A**, incorporating complex formation processes!
 
 <!-- <p align="center">
   <img src="./figures/Abstract_Graphics_JPCB.png" alt="GIP_Cplx" width="400">

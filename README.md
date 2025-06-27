@@ -10,7 +10,7 @@ Welcome to the GitHub repository for the **Well-stirred whole-cell model (WCM)**
 
 ## Required Programs
 
-The following software packages are required to run the simulation:
+The following software packages are required to run the simulation on Linux platforms:
 
 - **[Lattice Microbes](https://github.com/Luthey-Schulten-Lab/Lattice_Microbes)**  
 - **[odecell](https://github.com/Luthey-Schulten-Lab/odecell)**  
@@ -34,7 +34,7 @@ For a detailed explanation of parallel execution and simulation parameters, refe
 
 ## Hybrid Stochastic/Deterministic Algorithm
 
-The discreteness and stochasticity of chemical kinetics play a role when the number of reactants is significantly low, which makes it necessary to use stochastic chemical master equation (CME), shown as follows to sample the variation.
+The discreteness and stochasticity of chemical kinetics play a role when the number of reactants is significantly low. This makes it necessary to use stochastic chemical master equation (CME) for genetic information processes (GIP) where the copy numbers of species are low, shown as follows to sample the variation. In contrast, ordinary differential equations (ODE) is sufficient to depict the kinetics of large numbers of small metabolites in metabolism.
 
 $\frac{dP(\mathbf{x},t)}{dt}=\sum_{r}^{R} [-a_r({{\mathbf{x}}}) P({{\mathbf{x}}},t) + a_r({{\mathbf{x}}}_\nu-\mathbf{S_r}) P({{\mathbf{x}}}-\mathbf{S_r},t)]$
 
@@ -98,7 +98,8 @@ The CME simulation is executed using Lattice Microbes (LM) with direct Gillespie
 
 - `Syn3A_updated.xml` — Includes metabolites, compartments, reactions, and gene associations.
   - Updated SBML model from [*eLife*, 2019](https://elifesciences.org/articles/36842).
-  - Read in for Reaction and stoichiometries by `rxns_ODE.py`
+  - Standard file format in system biology.
+  - Read in for Reaction and stoichiometries by `rxns_ODE.py`.
 
 
 - `initial_concentration.xlsx` — Provides initial conditions for proteins, medium, and metabolites.
@@ -106,8 +107,8 @@ The CME simulation is executed using Lattice Microbes (LM) with direct Gillespie
   - **Sheet breakdown**:
   - **Comparative Proteomics**: Protein initial counts for CME.
   - **Simulation Medium**: Medium composition for simulation.
-  - **Intracellular Metabolites**: Metabolite concentrations in cytoplasm.
-  - **mRNA count**: Initial average count of mRNAs.
+  - **Intracellular Metabolites**: Metabolite concentrations in cytoplasm for ODE.
+  - **mRNA count**: Initial average count of mRNAs for CME.
   - **Protein Metabolites**: Protein metabolite IDs used in `initiation.py` and `rxns_ODE.py`.
 
 
@@ -120,7 +121,7 @@ The CME simulation is executed using Lattice Microbes (LM) with direct Gillespie
   - **Gene Expression**: Parameters in gene expression (`rxns_CME.py`, `replication.py`, and `GIP_rates.py`)
   - **SSU Assembly, LSU Assembly**: Reactions and rates of SSU and LSU assembly
 
-- `complex_formation.xlsx` — Defines the composition of protein complexes.
+- `complex_formation.xlsx` — Defines the composition and initial counts of protein complexes.
 
 ---
 
@@ -129,10 +130,10 @@ The CME simulation is executed using Lattice Microbes (LM) with direct Gillespie
 Each simulation replicate with index *i* generates:
 
 - `counts_i.csv`: Species count trajectories of metabolites from ODE and genetic particles from CME (units: molecules).
-- `SA_i.csv`: Surface area (nm² or m²) and volume (L) trajectories.
+- `SA_i.csv`: Surface area (nm$^2$ or m$^2$) and volume (L) trajectories.
 - `Flux_i.csv`: Fluxes through ODE reactions (units: mM/s).
 - `log_i.txt`: Log file with timestamps, printed reactions, run times, and any warnings/errors.
 
-Output files are saved to directories defined in `mpirun.sh`. They will be created if they do not exist.
+Output files are saved to directories defined and created in `mpirun.sh`.
 
 Typical CSV file size ranges from **100–200 MB** for a 7200 s simulation with 1 s hook intervals.

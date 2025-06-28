@@ -20,7 +20,7 @@ The following software packages are required to run the simulation on Linux plat
 
 ## Run the Simulation in Parallel
 
-The spatially homogeneous simulations can be efficiently parallelized across up to 25 indepedent cell replicates or more, with each replicate requiring less than 2GB of RAM. On systems equipped with AMD EPYC 7763 “Milan” processors on **[Delta](https://docs.ncsa.illinois.edu/systems/delta/en/latest/index.html)** or Intel Xeon Gold 6154 CPUs @ 3.00 GHz on normal workstation, the parallel simulations of 2 biological hours with communication step of 1 s typically complete within **6 physical hours**.
+The spatially homogeneous simulations can be efficiently parallelized across up to 25 indepedent cell replicates or more, with each replicate requiring less than 2GB of RAM. On systems equipped with AMD EPYC 7763 “Milan” processors on **[Delta](https://docs.ncsa.illinois.edu/systems/delta/en/latest/index.html)** or Intel(R) Xeon(R) w7-3465X processors on normal workstation, the parallel simulations of 2 biological hours with communication step of 1 s typically complete within **6 physical hours**.
 
 To execute the parallel CMEODE simulation:
 

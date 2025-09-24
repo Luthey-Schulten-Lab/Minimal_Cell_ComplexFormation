@@ -595,7 +595,7 @@ def calculateTranslocationCosts(sim_properties):
         ATP_transloc_cost += int(len(full_aasequence)*(countsDic[Produced_PreP][-1] - countsDic[Produced_PreP][-2])/10) # 1 ATP per 10 AAs
 
 
-    for locusNum in sim_properties['locations_ptns']['secreted']:
+    for locusNum in sim_properties['locations_ptns']['extracellular']:
         Produced_ptn = 'Produced_P_' + locusNum
         
         full_aasequence = sim_properties['genome']['JCVISYN3A_'+locusNum]['AAsequence']

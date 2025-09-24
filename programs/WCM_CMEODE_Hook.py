@@ -44,29 +44,32 @@ rank = comm.Get_rank()+1
 size = comm.Get_size()
 
 
-# Arguments needed: simulationType, simulation time length, restartInterval, hookInterval, writeInterval, outputfolder
+# Arguments needed: input_dir, simulationType, simulation time length, restartInterval, hookInterval, writeInterval, outputfolder
 ap = argparse.ArgumentParser()
 
 
+ap.add_argument('-in','--input_dir',required=True)
 ap.add_argument('-st','--simType',required=True)
 ap.add_argument('-t','--simTime',required=True)
 ap.add_argument('-rs','--restartInterval',required=True)
 ap.add_argument('-hi', '--hookInterval', required = True)
-ap.add_argument('-f', '--folder', required= True)
+ap.add_argument('-f', '--output_dir', required= True)
 
 args = ap.parse_args()
 
-dir_path = args.folder
+input_dir = args.input_dir
+
+output_dir = args.output_dir
 
 # Check if the directory exists
-if not os.path.exists(dir_path):
+if not os.path.exists(output_dir):
         # The directory does not exist, create it
-        os.makedirs(dir_path)
+        os.makedirs(output_dir)
 
 
 logfile = 'log_{0}.txt'.format(rank)
 
-logfile_path = os.path.join(dir_path, logfile)
+logfile_path = os.path.join(output_dir, logfile)
 
 # Redirect the output and possible error to a log file
 log = open(logfile_path,'w')
@@ -124,8 +127,11 @@ print('The simulation starts at '+ str(start_time))
 
 sim_properties = {}
 
+sim_properties['input_dir'] = input_dir
+print(f"The input directory is {input_dir}")
+
 # Input Gene bank file syn3A.gb
-genomeFile3A =  '../input_data/syn3A.gb'
+genomeFile3A =  sim_properties['input_dir'] + 'syn3A.gb'
 genome3A = next(SeqIO.parse(genomeFile3A, "gb"))
 
 # Convert genebank file syn3A.gb into a multilayer dictionanry genome
@@ -153,16 +159,15 @@ IC.getReactionMap(sim_properties)
 
 # The names of three csv files e.g. counts_1.csv, SA_1.csv, Flux_1.csv
 countsCSV = 'counts_{0}.csv'.format(rank)
-countsCSV_path = os.path.join(dir_path,countsCSV)
+countsCSV_path = os.path.join(output_dir,countsCSV)
 
 SACSV = 'SA_{0}.csv'.format(rank)
-SACSV_path = os.path.join(dir_path, SACSV)
+SACSV_path = os.path.join(output_dir, SACSV)
 
 fluxCSV = 'Flux_{0}.csv'.format(rank)
-fluxCSV_path = os.path.join(dir_path, fluxCSV)
+fluxCSV_path = os.path.join(output_dir, fluxCSV)
 
 sim_properties['path'] = {'counts': countsCSV_path, 'SA': SACSV_path, 'flux':fluxCSV_path}
-
 
 # sim_properties['time_second] will append the hook moments until hits the simulation time length
 sim_properties['time_second'] = [int(0)]
@@ -215,41 +220,39 @@ for restartNum in range(0,restartNums):
         IC.initializeMembrane(sim_properties)
     
     # LMfilename of the current simulation
-    LMfilename = os.path.join(dir_path, 'CME_ODE_{0}_{1}.lm'.format(rank, restartNum))
+    LMfilename = os.path.join(output_dir, 'CME_ODE_{0}_{1}.lm'.format(rank, restartNum))
 
     # Remove lm file from previous simulation and Save new CME simulation LM HDF5 file
     os.system("rm -rf %s"%(LMfilename))
     save_start = phys_time.time()
     sim.save(LMfilename)
     print(f'LM file Saved in {phys_time.time() - save_start:.3f} seconds')
-
-    print(sim_properties['locusNumtoGeneSeq'])
     
     if restartNum == 0:
 
         # print(sim.initial_counts)
 
-        print('Genetic Information Reactions Numbers in different subsystem:')
-        print(sim_properties['rxns_numbers'])
+        # print('Genetic Information Reactions Numbers in different subsystem:')
+        # print(sim_properties['rxns_numbers'])
 
         print("Total reactions in sim_properties['rxns_numbers'] are {0}".format(sum(number_rxns[0] for number_rxns in sim_properties['rxns_numbers'].values()) ))
         
-        print('rxns_map')
-        print(f"{sim_properties['rxns_map']}")
+        # print('rxns_map')
+        # print(f"{sim_properties['rxns_map']}")
 
         # Print CME system information
         print('{0} Species in CME simulation object sim.particleMap'.format(len(sim.particleMap)))
 
-        print(sim.particleMap)
-        print('self.initial_counts')
-        print(f'{sim.initial_counts}')
+        # print(sim.particleMap)
+        # print('self.initial_counts')
+        # print(f'{sim.initial_counts}')
         print('{0} Reactions in CME simulation object sim.reactions'.format(len(sim.reactions)))
         
         for rxn in sim.reactions:
                print(rxn) # For debugging
 
         # print(sim_properties['rxns_map'])
-        print(sim_properties['counts'])
+        # print(sim_properties['counts'])
 
 
     runCMEODE_start = phys_time.time()

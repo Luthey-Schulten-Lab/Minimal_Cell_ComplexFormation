@@ -604,7 +604,7 @@ def addProteinMetabolites(model, sim_properties):
 
     data_file = sim_properties['init_conc_path']
     
-    ptnMets = pd.read_excel(data_file, sheet_name='protein_metabolites')
+    ptnMets = pd.read_excel(data_file, sheet_name='Protein Metabolites')
     
     for index, row in ptnMets.iterrows():
         
@@ -682,7 +682,7 @@ def getEnzymeConc(rxn_params, sim_properties):
 
 #     print(Enzymes)
     
-    if len(Enzymes) == 1: # will work for complexes like rnsBACD, potPassive
+    if len(Enzymes) == 1: # will work for complexes like rnsBACD, potPassive, ATPSynthase
         
         if Enzymes[0] == 'default':
             
@@ -705,15 +705,18 @@ def getEnzymeConc(rxn_params, sim_properties):
 
             return EnzymeConc
     else:
-        # Here we difine two means of how multiple enzymes works
+        # Here we define two means of how multiple enzymes works
         # For 'or' case, all enzymes can catalyze the reaction and we give them the same kinetic parameter
         # And the rate is determined by the sum of the concentrations of enzymes
 
         GPRrule = rxn_params.loc[ rxn_params["Parameter Type"] == "GPR rule" ]["Value"].values[0]
+        if sim_properties['time_second'][-1] == 0:
+            print(f"ODE, {rxnID} still using GPR rule {GPRrule.upper()} on proteins {','.join(_ for _ in Enzymes)}")
+
 
         if GPRrule == 'or':
             Enzymecount = 0
-            
+
             for ptnID in Enzymes:
                 
                 Enzymecount += getEnzymeCount(sim_properties, ptnID)
@@ -727,7 +730,6 @@ def getEnzymeConc(rxn_params, sim_properties):
         # For 'and' case, all enzymes are needed to catalyze the reaction and the concentration of the lowest enzyme determines the rate        
         elif GPRrule == 'and':
 
-            print(f"ODE, {rxnID} still using GPR rule {GPRrule.upper()}")
 
             Enzymecounts = []
             

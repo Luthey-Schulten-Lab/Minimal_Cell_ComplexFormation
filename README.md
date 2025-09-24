@@ -123,6 +123,8 @@ The CME simulation is executed using Lattice Microbes (LM) with direct Gillespie
 
 - `complex_formation.xlsx` — Defines the composition and initial counts of protein complexes.
 
+- `SSU_assembly_raw.json` — Contains reactions, fluxes, and rates of full parallel SSU assembly
+
 ---
 
 ## Output Files
@@ -130,7 +132,7 @@ The CME simulation is executed using Lattice Microbes (LM) with direct Gillespie
 Each simulation replicate with index *i* generates:
 
 - `counts_i.csv`: Species count trajectories of metabolites from ODE and genetic particles from CME (units: molecules).
-- `SA_i.csv`: Surface area (nm$^2$ or m$^2$) and volume (L) trajectories.
+- `SA_i.csv`: Surface area (nm$`^2`$ or m$`^2`$) and volume (L) trajectories.
 - `Flux_i.csv`: Fluxes through ODE reactions (units: mM/s).
 - `log_i.txt`: Log file with timestamps, printed reactions, run times, and any warnings/errors.
 

@@ -8,6 +8,9 @@ Welcome to the GitHub repository for the **Spatially homogeneous whole-cell mode
 
 ---
 
+This project is now published on The Journal of Physical Chemistry B (https://doi.org/10.1021/acs.jpcb.5c04532).
+
+Trajectories of the cells presented in the paper can be found at Zenodo (https://zenodo.org/records/19598313).
 ## Required Programs
 
 The following software packages are required to run the simulation on Linux platforms:
